@@ -35,10 +35,15 @@ int main()
     }
     for(ll i {0}; i < h; i++)
         plane[i][w] = '\0';
-    ll rx {static_cast<ll>(Ox)}, ry {static_cast<ll>(Oy)};
-    ld dx {Px - Ox}, dy {Py - Oy}, ddx {dx != 0 ? (1 / abs(dx)) : numeric_limits<ld>::infinity()}, ddy {dy != 0 ? (1 / abs(dy)) : numeric_limits<ld>::infinity()}, dmaxx {dx != 0 ? (((dx > 0 ? floor(Ox) + 1 : floor(Ox)) - Ox) / dx) : numeric_limits<ld>::infinity()}, dmaxy {dy != 0 ? (((dy > 0 ? floor(Oy) + 1 : floor(Oy)) - Oy) / dy) : numeric_limits<ld>::infinity()};
+    ll rx {static_cast<ll>(floor(Ox))}, ry {static_cast<ll>(floor(Oy))};
+    ld dx {Px - Ox}, dy {Py - Oy}, 
+        ddx {dx != 0 ? (1 / abs(dx)) : numeric_limits<ld>::infinity()}, 
+        ddy {dy != 0 ? (1 / abs(dy)) : numeric_limits<ld>::infinity()}, 
+        dmaxx {dx != 0 ? (((dx > 0 ? floor(Ox) + 1 : floor(Ox)) - Ox) / dx) : numeric_limits<ld>::infinity()}, 
+        dmaxy {dy != 0 ? (((dy > 0 ? floor(Oy) + 1 : floor(Oy)) - Oy) / dy) : numeric_limits<ld>::infinity()};
     while(rx > -1 && rx < w && ry > -1 && ry < h)
     {
+        plane[ry][rx] = 'W';
         if(dmaxx < dmaxy)
         {
             rx += sign(dx);
@@ -59,14 +64,13 @@ int main()
                 dmaxy += ddy;
             }
         }
-        plane[ry][rx] = 'W';
     }
     for(ll i {0}; i < h; i++)
     {
         for(ll j {0}; j < w; j++)
         {
-            if(i == static_cast<ll>(Oy) && j == static_cast<ll>(Ox)) plane[i][j] = 'O';
-            else if(i == static_cast<ll>(Py) && j == static_cast<ll>(Px)) plane[i][j] = 'P';
+            if(i == static_cast<ll>(floor(Oy)) && j == static_cast<ll>(floor(Ox))) plane[i][j] = 'O';
+            else if(i == static_cast<ll>(floor(Py)) && j == static_cast<ll>(floor(Px))) plane[i][j] = 'P';
         }
     }
     for(ll i {0}; i < h; i++)
